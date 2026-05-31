@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../utils/app_theme.dart';
 import '../../providers/user_provider.dart';
 import '../../models/message_model.dart';
-import 'package:intl/intl.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({super.key});
@@ -30,33 +29,25 @@ class _MessagesScreenState extends State<MessagesScreen> {
       appBar: AppBar(
         title: const Text('الرسائل'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
+          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
         ],
       ),
       body: userProvider.conversations.isEmpty
           ? _buildEmptyState()
           : Column(
               children: [
-                // Islamic reminder
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   color: AppTheme.primaryGreen.withOpacity(0.05),
-                  child: Row(
+                  child: const Row(
                     children: [
-                      const Icon(Icons.info_outline, color: AppTheme.primaryGreen, size: 16),
-                      const SizedBox(width: 8),
+                      Icon(Icons.info_outline, color: AppTheme.primaryGreen, size: 16),
+                      SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           'ممنوع تبادل الأرقام أو التواصل خارج التطبيق - اتق الله في أمرك',
-                          style: const TextStyle(
-                            fontFamily: 'Tajawal',
-                            fontSize: 12,
-                            color: AppTheme.primaryGreen,
-                          ),
+                          style: TextStyle(fontFamily: 'Tajawal', fontSize: 12, color: AppTheme.primaryGreen),
                         ),
                       ),
                     ],
@@ -66,9 +57,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   child: ListView.separated(
                     itemCount: userProvider.conversations.length,
                     separatorBuilder: (_, __) => const Divider(height: 1, color: AppTheme.dividerColor),
-                    itemBuilder: (context, index) {
-                      return _buildConversationTile(userProvider.conversations[index]);
-                    },
+                    itemBuilder: (context, index) =>
+                        _buildConversationTile(userProvider.conversations[index]),
                   ),
                 ),
               ],
@@ -77,7 +67,16 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   Widget _buildConversationTile(ConversationModel conv) {
-    final timeAgo = _formatTime(conv.lastMessageTime);
+    final now = DateTime.now();
+    final diff = now.difference(conv.lastMessageTime);
+    String timeAgo;
+    if (diff.inMinutes < 60) {
+      timeAgo = 'منذ ${diff.inMinutes} د';
+    } else if (diff.inHours < 24) {
+      timeAgo = 'منذ ${diff.inHours} س';
+    } else {
+      timeAgo = '${conv.lastMessageTime.day}/${conv.lastMessageTime.month}';
+    }
 
     return InkWell(
       onTap: () => context.push('/chat/${conv.otherUserId}'),
@@ -125,14 +124,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           color: AppTheme.textDark,
                         ),
                       ),
-                      Text(
-                        timeAgo,
-                        style: TextStyle(
-                          fontFamily: 'Tajawal',
-                          fontSize: 12,
-                          color: conv.unreadCount > 0 ? AppTheme.primaryGreen : AppTheme.textGrey,
-                        ),
-                      ),
+                      Text(timeAgo,
+                          style: TextStyle(
+                            fontFamily: 'Tajawal',
+                            fontSize: 12,
+                            color: conv.unreadCount > 0 ? AppTheme.primaryGreen : AppTheme.textGrey,
+                          )),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -146,7 +143,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
                             fontFamily: 'Tajawal',
                             fontSize: 13,
                             color: conv.unreadCount > 0 ? AppTheme.textDark : AppTheme.textGrey,
-                            fontWeight: conv.unreadCount > 0 ? FontWeight.w500 : FontWeight.normal,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -162,14 +158,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                             shape: BoxShape.circle,
                           ),
                           child: Center(
-                            child: Text(
-                              '${conv.unreadCount}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: Text('${conv.unreadCount}',
+                                style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
                           ),
                         ),
                     ],
@@ -183,14 +173,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
     );
   }
 
-  String _formatTime(DateTime time) {
-    final now = DateTime.now();
-    final diff = now.difference(time);
-    if (diff.inMinutes < 60) return 'منذ ${diff.inMinutes} د';
-    if (diff.inHours < 24) return 'منذ ${diff.inHours} س';
-    return DateFormat('dd/MM').format(time);
-  }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -198,16 +180,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
         children: [
           const Text('💬', style: TextStyle(fontSize: 70)),
           const SizedBox(height: 20),
-          const Text(
-            'لا توجد محادثات بعد',
-            style: TextStyle(fontFamily: 'Tajawal', fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.textDark),
-          ),
+          const Text('لا توجد محادثات بعد',
+              style: TextStyle(fontFamily: 'Tajawal', fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.textDark)),
           const SizedBox(height: 8),
-          const Text(
-            'ابدأ بتصفح الملفات وأرسل رسالة للتعارف الشرعي',
-            style: TextStyle(fontFamily: 'Tajawal', color: AppTheme.textGrey),
-            textAlign: TextAlign.center,
-          ),
+          const Text('ابدأ بتصفح الملفات وأرسل رسالة للتعارف الشرعي',
+              style: TextStyle(fontFamily: 'Tajawal', color: AppTheme.textGrey), textAlign: TextAlign.center),
           const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: () {},

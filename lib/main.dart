@@ -9,16 +9,10 @@ import 'providers/search_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // تهيئة Firebase (يحتاج إلى ملفات google-services.json و GoogleService-Info.plist)
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
-  // إجبار الاتجاه العمودي
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
   runApp(const NikahApp());
 }
 
@@ -34,7 +28,7 @@ class NikahApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SearchProvider()),
       ],
       child: MaterialApp.router(
-        title: 'نِكاح - الزواج الإسلامي',
+        title: 'نِكاح',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         routerConfig: AppRouter.router,
