@@ -7,7 +7,7 @@ plugins {
 android {
     namespace "com.nikah.islamic_marriage"
     compileSdk 34
-    ndkVersion "25.1.8937393"
+    ndkVersion "27.0.12077973"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -16,10 +16,6 @@ android {
 
     kotlinOptions {
         jvmTarget = '17'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
