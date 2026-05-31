@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // ألوان التطبيق الرئيسية - ألوان إسلامية أنيقة
-  static const Color primaryGreen = Color(0xFF1B6B3A);     // أخضر إسلامي
-  static const Color secondaryGreen = Color(0xFF2D9B5A);   // أخضر فاتح
-  static const Color accentGold = Color(0xFFD4AF37);       // ذهبي
-  static const Color lightGold = Color(0xFFF5E6C8);        // ذهبي فاتح
-  static const Color backgroundCream = Color(0xFFFAF8F5);  // كريمي
+  static const Color primaryGreen = Color(0xFF1B6B3A);
+  static const Color secondaryGreen = Color(0xFF2D9B5A);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFF5E6C8);
+  static const Color backgroundCream = Color(0xFFFAF8F5);
   static const Color cardWhite = Color(0xFFFFFFFF);
   static const Color textDark = Color(0xFF1A1A2E);
   static const Color textGrey = Color(0xFF6B7280);
@@ -82,11 +81,12 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: errorRed),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         labelStyle: const TextStyle(color: textGrey, fontFamily: 'Tajawal'),
         hintStyle: const TextStyle(color: textGrey, fontFamily: 'Tajawal'),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardWhite,
         elevation: 2,
         shadowColor: Colors.black12,
@@ -98,7 +98,8 @@ class AppTheme {
         backgroundColor: Colors.white,
         selectedItemColor: primaryGreen,
         unselectedItemColor: textGrey,
-        selectedLabelStyle: TextStyle(fontFamily: 'Tajawal', fontWeight: FontWeight.bold),
+        selectedLabelStyle: TextStyle(
+            fontFamily: 'Tajawal', fontWeight: FontWeight.bold),
         unselectedLabelStyle: TextStyle(fontFamily: 'Tajawal'),
         type: BottomNavigationBarType.fixed,
         elevation: 8,
